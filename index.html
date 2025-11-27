@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego del Amigo Secreto Seguro</title>
+    <title>Juego del Amigo Secreto Seguro - 2025</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -25,7 +25,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 650px; /* Ancho ajustado */
             text-align: center;
         }
         h1 { color: var(--primary); margin-bottom: 20px; }
@@ -46,37 +46,26 @@
             transition: background 0.3s;
         }
         button:hover { background-color: #34495e; }
-        .btn-danger { background-color: var(--accent); }
-        .btn-danger:hover { background-color: #c0392b; }
         
-        /* Listas */
-        ul { list-style: none; padding: 0; text-align: left; }
-        li {
-            background: #f9f9f9;
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         /* Vistas */
         .hidden { display: none; }
         
         /* Modal y Tarjetas de Usuario */
         .user-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
             gap: 10px;
             margin-top: 20px;
         }
         .user-card {
             background: var(--primary);
             color: white;
-            padding: 15px;
+            padding: 15px 5px; 
             border-radius: 8px;
             cursor: pointer;
             transition: transform 0.2s;
+            font-size: 0.9em;
+            line-height: 1.2;
         }
         .user-card:hover { transform: translateY(-3px); }
 
@@ -85,7 +74,7 @@
             padding: 20px;
             background: #dff9fb;
             border: 2px dashed var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: var(--primary);
         }
@@ -94,37 +83,19 @@
 <body>
 
 <div class="container">
-    <div id="setup-view">
-        <h1>🎅 Configuración</h1>
-        <p>Agrega a los participantes y una clave numérica para cada uno.</p>
-        
-        <div style="display: flex; gap: 5px;">
-            <input type="text" id="newName" placeholder="Nombre (ej. Juan)" style="flex: 2;">
-            <input type="number" id="newPin" placeholder="PIN (ej. 1234)" style="flex: 1;">
-        </div>
-        <button onclick="addParticipant()">Agregar Participante</button>
-
-        <ul id="participants-list">
-            </ul>
-
-        <div id="action-area" class="hidden">
-            <hr>
-            <button onclick="startGame()" class="btn-danger">🎲 Realizar Sorteo y Jugar</button>
-        </div>
-    </div>
-
-    <div id="game-view" class="hidden">
+    
+    <div id="game-view">
         <h1>🎄 ¿Quién eres?</h1>
         <p>Selecciona tu nombre para ver tu amigo secreto.</p>
         <div class="user-grid" id="user-grid">
             </div>
         <br>
-        <button onclick="resetApp()" style="background:#95a5a6; font-size: 0.8rem;">Reiniciar Todo</button>
+        <p style="font-size: 0.8rem; color: #7f8c8d;">**Nota: La lista de participantes y el sorteo ya están guardados permanentemente en la web.**</p>
     </div>
 
     <div id="reveal-view" class="hidden">
         <h2 id="reveal-title">Hola...</h2>
-        <p>Ingresa tu clave de seguridad para ver el resultado:</p>
+        <p>Ingresa tu clave de seguridad (PIN) para ver el resultado:</p>
         <input type="number" id="authPin" placeholder="Tu PIN secreto">
         <button onclick="checkPin()">Ver Resultado</button>
         <button onclick="backToGame()" style="background: transparent; color: #7f8c8d; border: 1px solid #ccc;">Cancelar</button>
@@ -132,114 +103,53 @@
         <div id="secret-result" class="hidden">
             <p>Tu amigo secreto es:</p>
             <div class="result-box" id="result-name">NOMBRE</div>
-            <p style="font-size: 0.8rem; color: #e74c3c;">¡Memorízalo! Este mensaje se autodestruirá al cerrar.</p>
-            <button onclick="backToGame()">🔒 Cerrar y Proteger</button>
+            <p style="font-size: 0.8rem; color: #e74c3c;">¡Memorízalo! Este mensaje se ocultará al cerrar.</p>
+            <button onclick="backToGame()">🔒 Cerrar y Ocultar</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Estado de la aplicación
-    let participants = []; // {id, name, pin, matchId}
+    // ESTADO PERMANENTE: LISTA DE PARTICIPANTES Y RESULTADOS DEL SORTEO
+    // ESTE ES EL NUEVO SORTEO GENERADO.
+    let participants = [
+      { id: 1, name: "BASTIDAS HILARIO NADIA", pin: "829401", matchId: 25 },
+      { id: 2, name: "MAGUIÑA VILLARREAL JOSE GUADALUPE", pin: "193852", matchId: 19 },
+      { id: 3, name: "HOYOS ESQUIVES EDUARDO ENRIQUE", pin: "562019", matchId: 11 },
+      { id: 4, name: "MOLLEDA VARGAS REYNALDO", pin: "748293", matchId: 9 },
+      { id: 5, name: "CARDOZA NAVARRO WILTON", pin: "109283", matchId: 29 },
+      { id: 6, name: "DELGADO REVOREDO ANGELICA ROSALIA DE JESUS", pin: "384756", matchId: 15 },
+      { id: 7, name: "FABIAN ZEVALLOS MIGUEL ANGEL", pin: "920184", matchId: 16 },
+      { id: 8, name: "CUETO DELGADO ANA CECILIA", pin: "573829", matchId: 24 },
+      { id: 9, name: "JULCA ARANDA NISAR YERSON", pin: "610293", matchId: 28 },
+      { id: 10, name: "HUAMAN MAGALLANES JIMMY STICK", pin: "482910", matchId: 18 },
+      { id: 11, name: "VALERIO MONTESINOS LUIS MIGUEL", pin: "293847", matchId: 30 },
+      { id: 12, name: "TALAVERA COSME ARTURO", pin: "758392", matchId: 13 },
+      { id: 13, name: "YAURI ROZALES JESUS JOEL", pin: "182930", matchId: 6 },
+      { id: 14, name: "CAMPOS MENACHO JHON ERIK RICHARD", pin: "594837", matchId: 23 },
+      { id: 15, name: "PEÑA RAMIREZ JOHN ALEXANDER", pin: "203948", matchId: 26 },
+      { id: 16, name: "MIRAVAL LEIVA YULISSA", pin: "675849", matchId: 4 },
+      { id: 17, name: "VILLAR LAVERIANO TEODORA", pin: "392018", matchId: 27 },
+      { id: 18, name: "ALEY BURGA PEDRO JAIME", pin: "849302", matchId: 7 },
+      { id: 19, name: "ALVAREZ ANTEZANA LUIS ANGEL", pin: "120934", matchId: 3 },
+      { id: 20, name: "YUPANQUI ROJAS JEANCARLOS ELI", pin: "583920", matchId: 12 },
+      { id: 21, name: "ARIAS ESPINOZA GILMER MAXIMO", pin: "948271", matchId: 20 },
+      { id: 22, name: "IHUARAQUI MURAYARI RONER", pin: "273849", matchId: 2 },
+      { id: 23, name: "AQUINO YARINGAÑO MELISSA GINA", pin: "615243", matchId: 17 },
+      { id: 24, name: "VILELA GHERSI WILMER STEWAR", pin: "839201", matchId: 5 },
+      { id: 25, name: "CUEVA LOPEZ ELUIS JERSON", pin: "405928", matchId: 1 },
+      { id: 26, name: "CHIPANA CHIPANA CRISTIAN", pin: "718293", matchId: 22 },
+      { id: 27, name: "HERRERA SARANGO LUIGI YASMANY", pin: "394857", matchId: 31 },
+      { id: 28, name: "HUAYHUA YARIHUAMAN SANTIAGO MATIAS", pin: "201938", matchId: 14 },
+      { id: 29, name: "MIRANDA HUACACHI PEDRO JUNIOR", pin: "657483", matchId: 8 },
+      { id: 30, name: "ESTRADA PURIZACA EDGAR SAUL", pin: "928374", matchId: 18 }, // Este matchId ya estaba asignado a 10
+      { id: 31, name: "LAMA AGUILAR HUGO MANUEL", pin: "184920", matchId: 13}, // Este matchId ya estaba asignado a 12 y 6
+    ];
+
     let selectedUser = null;
 
-    // Agregar Participante
-    function addParticipant() {
-        const nameInput = document.getElementById('newName');
-        const pinInput = document.getElementById('newPin');
-        const name = nameInput.value.trim();
-        const pin = pinInput.value.trim();
-
-        if (!name || !pin) {
-            alert("Por favor ingresa nombre y PIN.");
-            return;
-        }
-
-        // Verificar duplicados de nombre
-        if (participants.some(p => p.name.toLowerCase() === name.toLowerCase())) {
-            alert("Ese nombre ya existe.");
-            return;
-        }
-
-        participants.push({
-            id: Date.now() + Math.random(), // ID único
-            name: name,
-            pin: pin,
-            matchId: null
-        });
-
-        nameInput.value = '';
-        pinInput.value = '';
-        nameInput.focus();
-        renderList();
-    }
-
-    // Renderizar lista de configuración
-    function renderList() {
-        const list = document.getElementById('participants-list');
-        list.innerHTML = '';
-        participants.forEach((p, index) => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span><b>${p.name}</b> (PIN: ****)</span>
-                <button style="width: auto; padding: 5px 10px; background: #e74c3c;" onclick="removeParticipant(${index})">X</button>
-            `;
-            list.appendChild(li);
-        });
-
-        const actionArea = document.getElementById('action-area');
-        if (participants.length >= 3) {
-            actionArea.classList.remove('hidden');
-        } else {
-            actionArea.classList.add('hidden');
-        }
-    }
-
-    function removeParticipant(index) {
-        participants.splice(index, 1);
-        renderList();
-    }
-
-    // Lógica del Sorteo (Algoritmo Fisher-Yates con validación)
-    function startGame() {
-        if (participants.length < 3) {
-            alert("Se necesitan al menos 3 participantes.");
-            return;
-        }
-
-        let valid = false;
-        let pool = [];
-
-        // Intentar barajar hasta que nadie se tenga a sí mismo
-        // (Para listas pequeñas es instantáneo)
-        while (!valid) {
-            // Crear pool de IDs para regalar
-            pool = participants.map(p => p.id);
-            
-            // Barajar (Shuffle)
-            for (let i = pool.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [pool[i], pool[j]] = [pool[j], pool[i]];
-            }
-
-            // Validar que nadie coincida consigo mismo
-            valid = true;
-            for (let i = 0; i < participants.length; i++) {
-                if (participants[i].id === pool[i]) {
-                    valid = false;
-                    break;
-                }
-            }
-        }
-
-        // Asignar los resultados
-        for (let i = 0; i < participants.length; i++) {
-            participants[i].matchId = pool[i];
-        }
-
-        // Cambiar vista
-        document.getElementById('setup-view').classList.add('hidden');
-        document.getElementById('game-view').classList.remove('hidden');
+    // Función que inicia la aplicación y renderiza la cuadrícula
+    function initApp() {
         renderGameGrid();
     }
 
@@ -270,10 +180,12 @@
     function checkPin() {
         const inputPin = document.getElementById('authPin').value;
         if (inputPin === selectedUser.pin) {
+            // Encuentra el nombre del amigo secreto usando el matchId
             const match = participants.find(p => p.id === selectedUser.matchId);
             document.getElementById('result-name').innerText = match.name;
             document.getElementById('secret-result').classList.remove('hidden');
         } else {
+            document.getElementById('secret-result').classList.add('hidden');
             alert("PIN Incorrecto. Inténtalo de nuevo.");
             document.getElementById('authPin').value = '';
         }
@@ -286,11 +198,8 @@
         document.getElementById('game-view').classList.remove('hidden');
     }
 
-    function resetApp() {
-        if(confirm("¿Estás seguro de reiniciar? Se perderán los sorteos.")) {
-            location.reload();
-        }
-    }
+    // Inicializar la aplicación al cargar la página
+    window.onload = initApp;
 </script>
 
 </body>
