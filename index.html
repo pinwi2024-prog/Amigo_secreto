@@ -110,9 +110,34 @@
 </div>
 
 <script>
-    // ESTADO PERMANENTE: LISTA DE PARTICIPANTES Y RESULTADOS DEL SORTEO
-    // (Datos de la lista ocultos como JSON comprimido)
-    const participantsData = '[{"id":1,"name":"BASTIDAS HILARIO NADIA","pin":"829401","matchId":29},{"id":2,"name":"MAGUIÑA VILLARREAL JOSE GUADALUPE","pin":"193852","matchId":31},{"id":3,"name":"HOYOS ESQUIVES EDUARDO ENRIQUE","pin":"562019","matchId":15},{"id":4,"name":"MOLLEDA VARGAS REYNALDO","pin":"748293","matchId":13},{"id":5,"name":"CARDOZA NAVARRO WILTON","pin":"109283","matchId":7},{"id":6,"name":"DELGADO REVOREDO ANGELICA ROSALIA DE JESUS","pin":"384756","matchId":16},{"id":7,"name":"FABIAN ZEVALLOS MIGUEL ANGEL","pin":"920184","matchId":26},{"id":8,"name":"CUETO DELGADO ANA CECILIA","pin":"573829","matchId":24},{"id":9,"name":"JULCA ARANDA NISAR YERSON","pin":"610293","matchId":28},{"id":10,"name":"HUAMAN MAGALLANES JIMMY STICK","pin":"482910","matchId":21},{"id":11,"name":"VALERIO MONTESINOS LUIS MIGUEL","pin":"293847","matchId":23},{"id":12,"name":"TALAVERA COSME ARTURO","pin":"758392","matchId":19},{"id":13,"name":"YAURI ROZALES JESUS JOEL","pin":"182930","matchId":5},{"id":14,"name":"CAMPOS MENACHO JHON ERIK RICHARD","pin":"594837","matchId":12},{"id":15,"name":"PEÑA RAMIREZ JOHN ALEXANDER","pin":"203948","matchId":6},{"id":16,"name":"MIRAVAL LEIVA YULISSA","pin":"675849","matchId":17},{"id":17,"name":"VILLAR LAVERIANO TEODORA","pin":"392018","matchId":3},{"id":18,"name":"ALEY BURGA PEDRO JAIME","pin":"849302","matchId":8},{"id":19,"name":"ALVAREZ ANTEZANA LUIS ANGEL","pin":"120934","matchId":14},{"id":20,"name":"YUPANQUI ROJAS JEANCARLOS ELI","pin":"583920","matchId":20},{"id":21,"name":"ARIAS ESPINOZA GILMER MAXIMO","pin":"948271","matchId":22},{"id":22,"name":"IHUARAQUI MURAYARI RONER","pin":"273849","matchId":2},{"id":23,"name":"AQUINO YARINGAÑO MELISSA GINA","pin":"615243","matchId":10},{"id":24,"name":"VILELA GHERSI WILMER STEWAR","pin":"839201","matchId":4},{"id":25,"name":"CUEVA LOPEZ ELUIS JERSON","pin":"405928","matchId":1},{"id":26,"name":"CHIPANA CHIPANA CRISTIAN","pin":"718293","matchId":27},{"id":27,"name":"HERRERA SARANGO LUIGI YASMANY","pin":"394857","matchId":30},{"id드":28,"name":"HUAYHUA YARIHUAMAN SANTIAGO MATIAS","pin":"201938","matchId":9},{"id":29,"name":"MIRANDA HUACACHI PEDRO JUNIOR","pin":"657483","matchId":18},{"id":30,"name":"ESTRADA PURIZACA EDGAR SAUL","pin":"928374","matchId":25},{"id":31,"name":"LAMA AGUILAR HUGO MANUEL","pin":"184920","matchId":13}]';
+    
+    // --- 1. CÓDIGO DE DISUASIÓN ANTI-INSPECCIÓN (para usuarios casuales) ---
+    
+    document.addEventListener('contextmenu', function(e) {
+        // Bloquea el clic derecho
+        e.preventDefault(); 
+        alert("¡No se permite inspeccionar! 😉");
+    });
+
+    document.onkeydown = function(e) {
+        // Bloquea F12 (DevTools)
+        if (e.key === 'F12') {
+            return false;
+        }
+        // Bloquea Ctrl+Shift+I / Cmd+Option+I (Abrir DevTools)
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+            return false;
+        }
+        // Bloquea Ctrl+U / Cmd+Option+U (Ver Código Fuente)
+        if (e.ctrlKey && e.key === 'U') {
+            return false;
+        }
+    };
+
+    // --- 2. DATOS DEL SORTEO OCULTOS Y PARSEADOS ---
+
+    // ESTADO PERMANENTE: LISTA DE PARTICIPANTES (Nuevos PINs) Y RESULTADOS DEL 4TO SORTEO
+    const participantsData = '[{"id":1,"name":"BASTIDAS HILARIO NADIA","pin":"332862","matchId":22},{"id":2,"name":"MAGUIÑA VILLARREAL JOSE GUADALUPE","pin":"588143","matchId":11},{"id":3,"name":"HOYOS ESQUIVES EDUARDO ENRIQUE","pin":"674693","matchId":14},{"id":4,"name":"MOLLEDA VARGAS REYNALDO","pin":"530981","matchId":18},{"id":5,"name":"CARDOZA NAVARRO WILTON","pin":"705430","matchId":31},{"id":6,"name":"DELGADO REVOREDO ANGELICA ROSALIA DE JESUS","pin":"915209","matchId":24},{"id":7,"name":"FABIAN ZEVALLOS MIGUEL ANGEL","pin":"668641","matchId":16},{"id":8,"name":"CUETO DELGADO ANA CECILIA","pin":"237811","matchId":25},{"id":9,"name":"JULCA ARANDA NISAR YERSON","pin":"711942","matchId":5},{"id":10,"name":"HUAMAN MAGALLANES JIMMY STICK","pin":"852550","matchId":23},{"id":11,"name":"VALERIO MONTESINOS LUIS MIGUEL","pin":"293847","matchId":8},{"id":12,"name":"TALAVERA COSME ARTURO","pin":"534315","matchId":3},{"id":13,"name":"YAURI ROZALES JESUS JOEL","pin":"823029","matchId":19},{"id":14,"name":"CAMPOS MENACHO JHON ERIK RICHARD","pin":"256572","matchId":10},{"id":15,"name":"PEÑA RAMIREZ JOHN ALEXANDER","pin":"539140","matchId":17},{"id":16,"name":"MIRAVAL LEIVA YULISSA","pin":"840293","matchId":29},{"id":17,"name":"VILLAR LAVERIANO TEODORA","pin":"566870","matchId":27},{"id":18,"name":"ALEY BURGA PEDRO JAIME","pin":"487494","matchId":20},{"id":19,"name":"ALVAREZ ANTEZANA LUIS ANGEL","pin":"940365","matchId":26},{"id":20,"name":"YUPANQUI ROJAS JEANCARLOS ELI","pin":"523084","matchId":1},{"id":21,"name":"ARIAS ESPINOZA GILMER MAXIMO","pin":"143403","matchId":7},{"id":22,"name":"IHUARAQUI MURAYARI RONER","pin":"669236","matchId":13},{"id":23,"name":"AQUINO YARINGAÑO MELISSA GINA","pin":"875206","matchId":12},{"id":24,"name":"VILELA GHERSI WILMER STEWAR","pin":"472249","matchId":2},{"id":25,"name":"CUEVA LOPEZ ELUIS JERSON","pin":"186634","matchId":4},{"id":26,"name":"CHIPANA CHIPANA CRISTIAN","pin":"818789","matchId":30},{"id":27,"name":"HERRERA SARANGO LUIGI YASMANY","pin":"195328","matchId":6},{"id":28,"name":"HUAYHUA YARIHUAMAN SANTIAGO MATIAS","pin":"504047","matchId":15},{"id":29,"name":"MIRANDA HUACACHI PEDRO JUNIOR","pin":"269485","matchId":9},{"id":30,"name":"ESTRADA PURIZACA EDGAR SAUL","pin":"622468","matchId":21},{"id":31,"name":"LAMA AGUILAR HUGO MANUEL","pin":"732837","matchId":28}]';
 
     // Parsear los datos codificados al inicio de la aplicación
     let participants; 
@@ -185,3 +210,4 @@
 
 </body>
 </html>
+ 
