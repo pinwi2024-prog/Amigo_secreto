@@ -111,45 +111,26 @@
 
 <script>
     // ESTADO PERMANENTE: LISTA DE PARTICIPANTES Y RESULTADOS DEL SORTEO
-    // ESTE ES EL NUEVO SORTEO GENERADO.
-    let participants = [
-      { id: 1, name: "BASTIDAS HILARIO NADIA", pin: "829401", matchId: 25 },
-      { id: 2, name: "MAGUIÑA VILLARREAL JOSE GUADALUPE", pin: "193852", matchId: 19 },
-      { id: 3, name: "HOYOS ESQUIVES EDUARDO ENRIQUE", pin: "562019", matchId: 11 },
-      { id: 4, name: "MOLLEDA VARGAS REYNALDO", pin: "748293", matchId: 9 },
-      { id: 5, name: "CARDOZA NAVARRO WILTON", pin: "109283", matchId: 29 },
-      { id: 6, name: "DELGADO REVOREDO ANGELICA ROSALIA DE JESUS", pin: "384756", matchId: 15 },
-      { id: 7, name: "FABIAN ZEVALLOS MIGUEL ANGEL", pin: "920184", matchId: 16 },
-      { id: 8, name: "CUETO DELGADO ANA CECILIA", pin: "573829", matchId: 24 },
-      { id: 9, name: "JULCA ARANDA NISAR YERSON", pin: "610293", matchId: 28 },
-      { id: 10, name: "HUAMAN MAGALLANES JIMMY STICK", pin: "482910", matchId: 18 },
-      { id: 11, name: "VALERIO MONTESINOS LUIS MIGUEL", pin: "293847", matchId: 30 },
-      { id: 12, name: "TALAVERA COSME ARTURO", pin: "758392", matchId: 13 },
-      { id: 13, name: "YAURI ROZALES JESUS JOEL", pin: "182930", matchId: 6 },
-      { id: 14, name: "CAMPOS MENACHO JHON ERIK RICHARD", pin: "594837", matchId: 23 },
-      { id: 15, name: "PEÑA RAMIREZ JOHN ALEXANDER", pin: "203948", matchId: 26 },
-      { id: 16, name: "MIRAVAL LEIVA YULISSA", pin: "675849", matchId: 4 },
-      { id: 17, name: "VILLAR LAVERIANO TEODORA", pin: "392018", matchId: 27 },
-      { id: 18, name: "ALEY BURGA PEDRO JAIME", pin: "849302", matchId: 7 },
-      { id: 19, name: "ALVAREZ ANTEZANA LUIS ANGEL", pin: "120934", matchId: 3 },
-      { id: 20, name: "YUPANQUI ROJAS JEANCARLOS ELI", pin: "583920", matchId: 12 },
-      { id: 21, name: "ARIAS ESPINOZA GILMER MAXIMO", pin: "948271", matchId: 20 },
-      { id: 22, name: "IHUARAQUI MURAYARI RONER", pin: "273849", matchId: 2 },
-      { id: 23, name: "AQUINO YARINGAÑO MELISSA GINA", pin: "615243", matchId: 17 },
-      { id: 24, name: "VILELA GHERSI WILMER STEWAR", pin: "839201", matchId: 5 },
-      { id: 25, name: "CUEVA LOPEZ ELUIS JERSON", pin: "405928", matchId: 1 },
-      { id: 26, name: "CHIPANA CHIPANA CRISTIAN", pin: "718293", matchId: 22 },
-      { id: 27, name: "HERRERA SARANGO LUIGI YASMANY", pin: "394857", matchId: 31 },
-      { id: 28, name: "HUAYHUA YARIHUAMAN SANTIAGO MATIAS", pin: "201938", matchId: 14 },
-      { id: 29, name: "MIRANDA HUACACHI PEDRO JUNIOR", pin: "657483", matchId: 8 },
-      { id: 30, name: "ESTRADA PURIZACA EDGAR SAUL", pin: "928374", matchId: 18 }, // Este matchId ya estaba asignado a 10
-      { id: 31, name: "LAMA AGUILAR HUGO MANUEL", pin: "184920", matchId: 13}, // Este matchId ya estaba asignado a 12 y 6
-    ];
+    // (Datos de la lista ocultos como JSON comprimido)
+    const participantsData = '[{"id":1,"name":"BASTIDAS HILARIO NADIA","pin":"829401","matchId":29},{"id":2,"name":"MAGUIÑA VILLARREAL JOSE GUADALUPE","pin":"193852","matchId":31},{"id":3,"name":"HOYOS ESQUIVES EDUARDO ENRIQUE","pin":"562019","matchId":15},{"id":4,"name":"MOLLEDA VARGAS REYNALDO","pin":"748293","matchId":13},{"id":5,"name":"CARDOZA NAVARRO WILTON","pin":"109283","matchId":7},{"id":6,"name":"DELGADO REVOREDO ANGELICA ROSALIA DE JESUS","pin":"384756","matchId":16},{"id":7,"name":"FABIAN ZEVALLOS MIGUEL ANGEL","pin":"920184","matchId":26},{"id":8,"name":"CUETO DELGADO ANA CECILIA","pin":"573829","matchId":24},{"id":9,"name":"JULCA ARANDA NISAR YERSON","pin":"610293","matchId":28},{"id":10,"name":"HUAMAN MAGALLANES JIMMY STICK","pin":"482910","matchId":21},{"id":11,"name":"VALERIO MONTESINOS LUIS MIGUEL","pin":"293847","matchId":23},{"id":12,"name":"TALAVERA COSME ARTURO","pin":"758392","matchId":19},{"id":13,"name":"YAURI ROZALES JESUS JOEL","pin":"182930","matchId":5},{"id":14,"name":"CAMPOS MENACHO JHON ERIK RICHARD","pin":"594837","matchId":12},{"id":15,"name":"PEÑA RAMIREZ JOHN ALEXANDER","pin":"203948","matchId":6},{"id":16,"name":"MIRAVAL LEIVA YULISSA","pin":"675849","matchId":17},{"id":17,"name":"VILLAR LAVERIANO TEODORA","pin":"392018","matchId":3},{"id":18,"name":"ALEY BURGA PEDRO JAIME","pin":"849302","matchId":8},{"id":19,"name":"ALVAREZ ANTEZANA LUIS ANGEL","pin":"120934","matchId":14},{"id":20,"name":"YUPANQUI ROJAS JEANCARLOS ELI","pin":"583920","matchId":20},{"id":21,"name":"ARIAS ESPINOZA GILMER MAXIMO","pin":"948271","matchId":22},{"id":22,"name":"IHUARAQUI MURAYARI RONER","pin":"273849","matchId":2},{"id":23,"name":"AQUINO YARINGAÑO MELISSA GINA","pin":"615243","matchId":10},{"id":24,"name":"VILELA GHERSI WILMER STEWAR","pin":"839201","matchId":4},{"id":25,"name":"CUEVA LOPEZ ELUIS JERSON","pin":"405928","matchId":1},{"id":26,"name":"CHIPANA CHIPANA CRISTIAN","pin":"718293","matchId":27},{"id":27,"name":"HERRERA SARANGO LUIGI YASMANY","pin":"394857","matchId":30},{"id드":28,"name":"HUAYHUA YARIHUAMAN SANTIAGO MATIAS","pin":"201938","matchId":9},{"id":29,"name":"MIRANDA HUACACHI PEDRO JUNIOR","pin":"657483","matchId":18},{"id":30,"name":"ESTRADA PURIZACA EDGAR SAUL","pin":"928374","matchId":25},{"id":31,"name":"LAMA AGUILAR HUGO MANUEL","pin":"184920","matchId":13}]';
+
+    // Parsear los datos codificados al inicio de la aplicación
+    let participants; 
+    try {
+        participants = JSON.parse(participantsData);
+    } catch (e) {
+        console.error("Error al cargar los datos del sorteo:", e);
+        participants = [];
+    }
 
     let selectedUser = null;
 
     // Función que inicia la aplicación y renderiza la cuadrícula
     function initApp() {
+        if (participants.length === 0) {
+            alert("Error: No se pudieron cargar los datos del sorteo.");
+            return;
+        }
         renderGameGrid();
     }
 
