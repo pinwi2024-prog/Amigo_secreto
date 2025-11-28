@@ -111,12 +111,11 @@
 
 <script>
     
-    // --- 1. CÓDIGO DE DISUASIÓN ANTI-INSPECCIÓN (para usuarios casuales) ---
+    // --- 1. CÓDIGO DE DISUASIÓN ANTI-INSPECCIÓN (SILENCIOSO) ---
     
     document.addEventListener('contextmenu', function(e) {
-        // Bloquea el clic derecho
+        // Bloquea el clic derecho, SIN MOSTRAR ALERTA.
         e.preventDefault(); 
-        alert("¡No se permite inspeccionar! 😉");
     });
 
     document.onkeydown = function(e) {
@@ -124,12 +123,24 @@
         if (e.key === 'F12') {
             return false;
         }
-        // Bloquea Ctrl+Shift+I / Cmd+Option+I (Abrir DevTools)
-        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        
+        // Bloquea Ctrl/Cmd + Shift + I (Abrir DevTools)
+        if (e.shiftKey && (e.ctrlKey || e.metaKey) && (e.key === 'I' || e.key === 'i')) {
             return false;
         }
-        // Bloquea Ctrl+U / Cmd+Option+U (Ver Código Fuente)
-        if (e.ctrlKey && e.key === 'U') {
+
+        // Bloquea Ctrl/Cmd + Shift + J (Abrir Consola de DevTools)
+        if (e.shiftKey && (e.ctrlKey || e.metaKey) && (e.key === 'J' || e.key === 'j')) {
+            return false;
+        }
+        
+        // Bloquea Ctrl/Cmd + U (Ver Código Fuente)
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u')) {
+            return false;
+        }
+
+        // Bloquea Ctrl/Cmd + Shift + C (Inspeccionar elemento)
+        if (e.shiftKey && (e.ctrlKey || e.metaKey) && (e.key === 'C' || e.key === 'c')) {
             return false;
         }
     };
@@ -210,4 +221,3 @@
 
 </body>
 </html>
- 
